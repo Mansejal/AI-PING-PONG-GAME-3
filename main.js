@@ -1,5 +1,7 @@
 
 /*created by prashant shukla */
+var wristY = "";
+var wristX = "";
 
 var paddle2 =10,paddle1=10;
 
@@ -21,31 +23,33 @@ var ball = {
     dy:3
 }
 
-function setup(){
-  var canvas =  createCanvas(700,600);
-  canvas.parent('canvas');
+function setup() {
+	canvas = createCanvas(1240,336);
+	canvas.parent('canvas');
 
-  video = createCapture(VIDEO);
-  video.size(700,600);
-  video.hide();
 
-  poseNet = ml5.poseNet(video,modelLoaded);
-  poseNet.on('pose', gotPoses);
+	video = createCapture(VIDEO);
+	video.size(800,400);
+	video.parent('game_console');
+
+	poseNet = ml5.poseNet(video,modelLoaded);
+	poseNet.on('pose',gotPoses);  
 }
 function modelLoaded() {
-  console.log("Model Loaded !");
-}
-function startGame() {
- 
-}
-function gotPoses(results) {
+	console.log("Model Loaded !");
+  }
+  function gotPoses(results) {
 	if(results.length > 0) {
 	  console.log(results);
-	  wristX = results[0].pose.wrist.x;
-	  wristY = results[0].pose.wrist.y;
+	  noseX = results[0].pose.nose.x;
+	  noseY = results[0].pose.nose.y;
 	}
-  }
+  }  
+function game() {
+   console.log("wristX = " + wristX + "wristY = " + wristY);
+}
 function draw(){
+  game();
   image(video,0,0,700,600);
  background(0); 
 
@@ -181,3 +185,4 @@ function paddleInCanvas(){
     mouseY =0;
   }  
 }
+
